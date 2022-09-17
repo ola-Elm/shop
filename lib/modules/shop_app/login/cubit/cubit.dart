@@ -40,9 +40,9 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
         //انا هنا عملت المودل بايدي
         loginModel=ShopLoginModel.fromJson(value.data);
         //هيك بكون جاهز اخد منو اوبشنت
-        print(loginModel?.status);
-        print(loginModel?.massage);
-        print(loginModel?.data?.token);
+        print(loginModel.status);
+        print(loginModel.massage);
+        print(loginModel.data?.token);
         // print(value.data);
         // print(value.data['message']);
         emit(ShopLoginSuccessStates(loginModel));

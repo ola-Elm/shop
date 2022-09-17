@@ -26,8 +26,8 @@ class ShopLoginScreen extends StatelessWidget {
           listener: (context,state){
             if(state is ShopLoginSuccessStates){
                if(state.loginModel.status!){
-                  print(state.loginModel.massage);
-                  print(state.loginModel.data!.token);
+                  print('----------- ${state.loginModel.massage}');
+                  print('----------- ${state.loginModel.data!.token}');
                   //روح على سكرينة الهوووم
 
                   ChaseHelper.saveData(
@@ -36,10 +36,10 @@ class ShopLoginScreen extends StatelessWidget {
                   ).then((value){
 
                     token = state.loginModel.data!.token;
-                     navigateAndFinish(
-                         context,
-                         ShopLayout(),
-                     );
+                    //  navigateAndFinish(
+                    //      context,
+                    //      ShopLayout(),
+                    //  );
                   });
                 } else {
                   //هنا===>>>> اثبت مكانك و غير واظهرلو عللى السكرينة

@@ -47,9 +47,9 @@ class ShopCubit extends Cubit<ShopState>{
         url: HOME,
         token: token,
       ).then((value){
-
+        print('---------- ${value.statusCode}');
         homeModel = HomeModel.fromJson(value.data);
-        homeModel!.data!.product;
+        print('---------- ${homeModel!.data!.product}');
         //printFullText(homeModel!.data!.banner[0].image);
         // printFullText(homeModel.toString());
         print(homeModel?.status);
@@ -57,7 +57,7 @@ class ShopCubit extends Cubit<ShopState>{
         homeModel!.data!.product.forEach((element)
         {
           favorite.addAll({
-               element.id: element.inFavorites!,
+               element.id as int: element.inFavorites!,
           });
         });
 

@@ -8,7 +8,6 @@ class DioHelper {
 
 
   DioHelper._() {
-    debugPrint('------------------');
     dio = Dio(
       BaseOptions(
         //postman
@@ -23,8 +22,6 @@ class DioHelper {
         queryParameters: {'apiKey': '96e1b3a6cc3b4725b3d0de2e7af6ed9a'},
       ),
     );
-    debugPrint('--------${dio.runtimeType}----------');
-
     dio.interceptors.add(PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
