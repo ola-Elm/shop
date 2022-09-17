@@ -162,7 +162,7 @@ class ProductScreen extends StatelessWidget {
           alignment: AlignmentDirectional.bottomStart,
           children: [
             Image(
-              image: NetworkImage(model.image[0]),
+              image: NetworkImage(model.image),
               height: 200.0,
               width: double.infinity,
             ),

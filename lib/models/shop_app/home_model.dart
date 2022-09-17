@@ -1,12 +1,12 @@
 class HomeModel {
   ///////////
   late bool status;
-   HomeDataModel? data;
+  HomeDataModel? data;
 
   HomeModel.fromJson(Map<String,dynamic> json)
   {
     status = json['status'];
-    data = HomeDataModel.fromJson(json[data]);
+    data = HomeDataModel.fromJson(json['data']);
 
   }
 }
@@ -19,9 +19,9 @@ class HomeDataModel {
   HomeDataModel.fromJson(Map<String,dynamic> json)
   {
 
-     // banner = (json['banner'] as List<dynamic>).map((element) => BannerModel.fromJson(element)).toList();
+     banner = (json['banners'] as List<dynamic>).map((element) => BannerModel.fromJson(element)).toList();
 
-     // product = (json['product'] as List<dynamic>).map((element) => ProductModel.fromJson(element)).toList();
+     product = (json['products'] as List<dynamic>).map((element) => ProductModel.fromJson(element)).toList();
 
   }
 
@@ -43,10 +43,10 @@ class BannerModel {
 class ProductModel {
 // صح هذا كلاس هو نفسه في المفضلة
 // اذا هو اعمله بملف خارجي
-  late int id;
-  late int price;
-  late int oldPrice;
-  late int discount;
+  late num id;
+  late num price;
+  late num oldPrice;
+  late num discount;
   late String image ;
   String? name;
   bool?  inFavorites;

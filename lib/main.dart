@@ -21,14 +21,15 @@ void main() async
    Bloc.observer = MyBlocObserver();
    DioHelper();
    await ChaseHelper.init();
-   print(token);
+   
 
    bool? isDark= ChaseHelper.getData( key: "isDark");
    Widget widget;
-   bool? onBoarding= ChaseHelper.getData( key: "onBoarding");
+   bool? onBoarding= ChaseHelper.getData( key: "onBoardingScreen");
    token = ChaseHelper.getData( key: "token");
-
+   print('-----main----- $onBoarding $token');
    if(onBoarding != null){
+
        if(token != null) widget = ShopLayout();
          else widget = ShopLoginScreen();
    }
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget{
         BlocProvider(create: (BuildContext context)=> AppCubit()..changeAppMode(
           formshared: isDark,
         ),),
-        BlocProvider(create : (context) => ShopCubit()..getHomeData()..getCategories()..getFavorites()..getUserData(),),
+        BlocProvider(create : (context) => ShopCubit()..getHomeData()..getCategories()..getUserData()..getFavorites(),),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context,state){},

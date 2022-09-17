@@ -8,20 +8,22 @@ import 'package:flutterapp/shared/components/components.dart';
 import 'package:flutterapp/shared/styles/colors.dart';
 
 class FavoriteScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ShopCubit,ShopState>(
-      listener: (context,state){},
-      builder: (context,state){
+    return BlocConsumer<ShopCubit, ShopState>(
+      listener: (context, state) {},
+      builder: (context, state) {
         return ConditionalBuilder(
-            condition: state is! ShopLoadingGetFavoritesState,
-            builder: (context)=> ListView.separated(
-              itemBuilder: (context,index)=> buildFavItem(ShopCubit().favoritesModel!.data!.data![index],context),
-              separatorBuilder: (context,index)=> myDivider(),
-              itemCount: ShopCubit().favoritesModel!.data!.data!.length,
-            ),
-            fallback:(context)=> Center( child: CircularProgressIndicator()),
+          condition: ShopCubit.get(context).favoritesModel != null,
+          builder: (context) => ListView.separated(
+            itemBuilder: (context, index) => buildFavItem(
+                ShopCubit.get(context).favoritesModel!.data!.data![index], context),
+            separatorBuilder: (context, index) => myDivider(),
+            itemCount: ShopCubit.get(context).favoritesModel!.data!.data!.length,
+          ),
+          fallback: (context) => const Center(
+            child: CircularProgressIndicator(),
+          ),
         );
       },
     );
@@ -42,11 +44,11 @@ class FavoriteScreen extends StatelessWidget {
                     height: 120.0,
                     width: 120.0,
                   ),
-                  if(model.product!.discount != 0)
+                  if (model.product!.discount != 0)
                     Container(
                       color: Colors.red,
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child:  Text(
+                      child: const Text(
                         'DISCOUNT',
                         style: TextStyle(
                           fontSize: 8.0,
@@ -56,7 +58,7 @@ class FavoriteScreen extends StatelessWidget {
                     ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20.0,
               ),
               Expanded(
@@ -67,65 +69,61 @@ class FavoriteScreen extends StatelessWidget {
                       model.product!.name!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style:  TextStyle(
+                      style: const TextStyle(
                         fontSize: 14.0,
                         height: 1.3,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Row(
-                      children:
-                      [
+                      children: [
                         Text(
-                         model.product!.price.toString(),
-                          style:  TextStyle(
+                          model.product!.price!.toString(),
+                          style: const TextStyle(
                             fontSize: 12.0,
                             color: defaultColor,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5.0,
                         ),
-                        if(model.product!.discount != 0)
+                        if (model.product!.discount != 0)
                           Text(
                             model.product!.oldPrice.toString(),
-                            style:  TextStyle(
+                            style: const TextStyle(
                               fontSize: 10.0,
                               color: Colors.grey,
                               decoration: TextDecoration.lineThrough,
                             ),
                           ),
-                        Spacer(),
-                        IconButton(
-                          onPressed: ()
-                          {
-                             ShopCubit.get(context).changeFavorites(model.product!.id!);
-                            // print(model.id);
+                        const Spacer(),
+                        // IconButton(
+                        //   onPressed: ()
+                        //   {
+                        //      ShopCubit.get(context).changeFavorites(model.product!.id!);
+                        //     // print(model.id);
 
-                          },
-                          icon:  CircleAvatar(
-                            radius: 15.0,
-                            backgroundColor:
-                             //id product
-                             ShopCubit.get(context).favorite[model.product!.id]!
-                                ? defaultColor
-                                : Colors.grey,
-                            child: Icon(
-                              Icons.favorite_border,
-                              size: 14.0,
-                              color: Colors.white,
-                            ),
-                          ),
+                        //   },
+                        //   icon:  CircleAvatar(
+                        //     radius: 15.0,
+                        //     backgroundColor:
+                        //      //id product
+                        //      ShopCubit.get(context).favorite[model.product!.id ?? 0]!
+                        //         ? defaultColor
+                        //         : Colors.grey,
+                        //     child: Icon(
+                        //       Icons.favorite_border,
+                        //       size: 14.0,
+                        //       color: Colors.white,
+                        //     ),
+                        //   ),
 
-                        ),
-
+                        // ),
                       ],
                     ),
                   ],
                 ),
               ),
             ],
-
           )));
-
 }
