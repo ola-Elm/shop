@@ -1,4 +1,3 @@
-import 'package:flutterapp/layout/shop_app/cubit/state.dart';
 import 'package:flutterapp/models/shop_app/change_favorite_model.dart';
 import 'package:flutterapp/models/shop_app/login_model.dart';
 
@@ -46,6 +45,18 @@ class ShopSuccessUserDataState extends ShopState
 class ShopLoadingUserDataState extends ShopState{}
 
 class ShopErrorUserDataState extends ShopState{}
+
+
+class ShopSuccessUpdateState extends ShopState
+{
+  final ShopLoginModel loginModel;
+
+  ShopSuccessUpdateState(this.loginModel);
+}
+
+class ShopLoadingUpdateState extends ShopState{}
+
+class ShopErrorUpdateState extends ShopState{}
 
 
 

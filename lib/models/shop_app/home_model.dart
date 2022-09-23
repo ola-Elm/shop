@@ -43,7 +43,7 @@ class BannerModel {
 class ProductModel {
 // صح هذا كلاس هو نفسه في المفضلة
 // اذا هو اعمله بملف خارجي
-  late num id;
+  late int id;
   late num price;
   late num oldPrice;
   late num discount;

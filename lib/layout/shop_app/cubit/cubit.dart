@@ -38,7 +38,7 @@ class ShopCubit extends Cubit<ShopState>{
    }
 
   HomeModel? homeModel;
-  Map<int , bool> favorite = {};
+  Map<int , bool> favorites = {};
    void getHomeData()
    {
      // emit(ShopLoadingHomeDataState());
@@ -56,11 +56,12 @@ class ShopCubit extends Cubit<ShopState>{
 
         homeModel!.data!.product.forEach((element)
         {
-          favorite.addAll({
+          favorites.addAll({
                element.id as int: element.inFavorites!,
           });
         });
 
+        print(favorites.toString());
 
 
 
@@ -93,11 +94,11 @@ class ShopCubit extends Cubit<ShopState>{
 
   //FAVORITES
 
-  late ChangeFavoriteModel changeFavoriteModel;
+   ChangeFavoriteModel? changeFavoriteModel;
 
    void changeFavorites(int productId)
   {
-    favorite[productId] = !favorite[productId]!;//القيمة وعكسها
+    favorites[productId] = !favorites[productId]!;//القيمة وعكسها
     // emit(ShopSuccessFavoritesChangeState());
 
      DioHelper().postData(
@@ -114,18 +115,18 @@ class ShopCubit extends Cubit<ShopState>{
       // print(value.data);
        emit(ShopChangeFavoritesState());
 
-       if(!changeFavoriteModel.status!){
+       if(!changeFavoriteModel!.status!){
 
-       favorite[productId] = !favorite[productId]!;
+         favorites[productId] = !favorites[productId]!;
 
        } else
        {
          getFavorites();
        }
-       emit(ShopSuccessFavoritesChangeState(changeFavoriteModel));
+       emit(ShopSuccessFavoritesChangeState(changeFavoriteModel!));
 
      }).catchError((error){
-        favorite[productId] = !favorite[productId]!;
+       favorites[productId] = !favorites[productId]!;
        emit(ShopErrorFavoritesChangeState());
      });
 
@@ -168,5 +169,34 @@ class ShopCubit extends Cubit<ShopState>{
       emit(ShopErrorUserDataState());
     });
   }
+
+
+  void updateUserData({
+    required String? name,
+    required String? email,
+    required String? phone,
+})
+  {
+    emit(ShopLoadingUserDataState());
+    DioHelper().putData(
+      url: UPDATE_PROFILE,
+      token: token,
+      data:
+      {
+        'name':name,
+        'email':email,
+        'phone':phone,
+      },
+    ).then((value){
+      userModel = ShopLoginModel.fromJson(value.data);
+      // printFullText(userData!.data!.name);
+      emit(ShopSuccessUpdateState(userModel!));
+
+    }).catchError((error){
+      print(error.toString());
+      emit(ShopErrorUpdateState());
+    });
+  }
+
 
 }

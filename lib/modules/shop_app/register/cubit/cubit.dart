@@ -1,41 +1,42 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterapp/modules/shop_app/login/cubit/states.dart';
+import 'package:flutterapp/modules/shop_app/register/cubit/states.dart';
 import 'package:flutterapp/shared/network/end_points.dart';
 import 'package:flutterapp/shared/network/remote/dio_helper.dart';
 import 'package:flutterapp/models/shop_app/login_model.dart';
 
-class ShopLoginCubit extends Cubit<ShopLoginStates> {
+class ShopRegisterCubit extends Cubit<ShopRegisterStates> {
 
-  ShopLoginCubit() : super(ShopLoginInitialStates());
+  ShopRegisterCubit() : super(ShopRegisterInitialStates());
 
 
   //object
 
-  static ShopLoginCubit get(context) => BlocProvider.of(context);
+  static ShopRegisterCubit get(context) => BlocProvider.of(context);
   int currentState= 0;
 
   late ShopLoginModel loginModel;
 
-   void userLogin({
-    required String? email,
-    required String? password,
+   void userRegister({
+     required String email,
+     required String name,
+     required String password,
+     required String phone,
   })
   {
-    emit(ShopLoginLoadingStates());
+    emit(ShopRegisterLoadingStates());
     //DioHelper().init();
       DioHelper().postData(
+        url: REGISTER, //url=> endPoint
 
-      //url=> indipoint
-      // url: 'login',
-        url: LOGIN,
       //(data)محتاجة=> (key:value)
       //email:' ' & password" '',
       data: {
         //عشان بدي استدعي الميثود برا حعمل ريكوايرد للميثود ومش ححط الايميل والباسوورد بايدي
         'email': email,
+        'name': name,
         'password': password,
+        'phone': phone,
       },
       ).then((value) {
         //انا هنا عملت المودل بايدي
@@ -46,10 +47,10 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
         print(loginModel.data?.token);
         // print(value.data);
         // print(value.data['message']);
-        emit(ShopLoginSuccessStates(loginModel));
+        emit(ShopRegisterSuccessStates(loginModel));
     }).catchError((error){
       print(error.toString());
-      emit(ShopLoginErrorStates(error.toString()));
+      emit(ShopRegisterErrorStates(error.toString()));
     }) ;
   }
 
@@ -59,9 +60,10 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
    void ChangePasswordVisibility(){
      isPassword= !isPassword;
 
-     suffix=isPassword?  Icons.visibility_off_outlined : Icons.visibility_outlined;
+     suffix=
+       isPassword?  Icons.visibility_off_outlined : Icons.visibility_outlined;
 
-     emit(ShopChangePasswordVisibilityStates());
+     emit(ShopRegisterChangePasswordVisibilityStates());
    }
 }
 

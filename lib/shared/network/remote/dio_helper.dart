@@ -83,4 +83,27 @@ class DioHelper {
       data: data,
     );
   }
+
+  Future<Response> putData({
+    required String url,
+    Map<String, dynamic>? query,
+    required Map<String, dynamic>? data,
+    String lang = 'en',
+    String? token,
+  }) async {
+    dio.options.headers = {
+      'lang': lang,
+      'Content-Type': 'application/json',
+      //اللي تحت  لو في قيمة حطو لو مافي قيمة حتكون (null)
+      'Authorization': token ?? '',
+    };
+
+    //path=>url
+    return dio.put(
+      url,
+      queryParameters: query,
+      data: data,
+    );
+  }
+
 }

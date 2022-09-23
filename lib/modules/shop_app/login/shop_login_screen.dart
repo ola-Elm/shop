@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterapp/layout/shop_app/shop_layout.dart';
 import 'package:flutterapp/modules/shop_app/login/cubit/cubit.dart';
 import 'package:flutterapp/modules/shop_app/login/cubit/states.dart';
+import 'package:flutterapp/modules/shop_app/register/shop_register_screen.dart';
 import 'package:flutterapp/shared/components/components.dart';
 import 'package:flutterapp/shared/components/conestant.dart';
 import 'package:flutterapp/shared/network/local/cache_helper.dart';
@@ -12,15 +13,12 @@ import 'package:flutterapp/shared/network/local/cache_helper.dart';
 class ShopLoginScreen extends StatelessWidget {
 
   var formkey= GlobalKey<FormState>();
-
+  var emailController=TextEditingController();
+  var passwordController=TextEditingController();
   @override
   Widget build(BuildContext context) {
 
-    var emailController=TextEditingController();
-    var passwordController=TextEditingController();
-
-
-    return BlocProvider(
+   return BlocProvider(
       create: (BuildContext context) =>ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit,ShopLoginStates>(
           listener: (context,state){
@@ -29,17 +27,15 @@ class ShopLoginScreen extends StatelessWidget {
                   print('----------- ${state.loginModel.massage}');
                   print('----------- ${state.loginModel.data!.token}');
                   //روح على سكرينة الهوووم
-
                   ChaseHelper.saveData(
                       key: 'token',
                       value: state.loginModel.data!.token,
                   ).then((value){
-
                     token = state.loginModel.data!.token;
-                    //  navigateAndFinish(
-                    //      context,
-                    //      ShopLayout(),
-                    //  );
+                     navigateAndFinish(
+                         context,
+                         ShopLayout(),
+                     );
                   });
                 } else {
                   //هنا===>>>> اثبت مكانك و غير واظهرلو عللى السكرينة
@@ -49,11 +45,8 @@ class ShopLoginScreen extends StatelessWidget {
                       text: state.loginModel.massage!,
                       state: ToastStates.ERROR,
                   );
-
                 }
             }
-
-
           },
           builder: (context,state)
           {
@@ -173,9 +166,11 @@ class ShopLoginScreen extends StatelessWidget {
                              //     },
                              //     child: const Text('Regester',),),
 
+
+
                                defaultTextButton(
                                 function:  (){
-                                 
+                                  ShopRegisterScreen();
                                 },
                                 text: 'register',
                               ),
